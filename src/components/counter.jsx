@@ -4,31 +4,71 @@ import React, { Component } from "react";
 //cc+tab shortcut
 class Counter extends Component {
   state = {
-    count: 0
+    count: 0,
+    tags: ["tag1", "tag2", "tag3"]
     // imageurl: "https://picsum.photos/200" //generates random 200x200 image
   };
 
-  render() {
-    let classes = this.newMethod();
+  //   constructor() {
+  //     super();
+  //     //functions in javascript are objects
+  //     this.handleIncrement = this.handleIncrement.bind(this);
+  //   }
 
+  // arrow functions dont rebind this - they inherit it.
+
+  //conditional rendering
+  //   renderTags() {
+  //     if (this.state.tags.length === 0) return <p>There are no tags!</p>;
+  //     return (
+  //       <ul>
+  //         {this.state.tags.map(tag => (
+  //           <li key={tag}>{tag}</li>
+  //         ))}
+  //       </ul>
+  //     );
+  //   }
+
+  //event handler
+  //you must create a constructor for Counter if you uste this syntax,
+  //   or you can user arrow functions
+  //   handleIncrement() {
+  //     console.log("Increment Clicked", this);
+  //   }
+
+  //you dont need to rebind event handler manually
+  handleIncrement = () => {
+    console.log("Increment Clicked", this);
+    // this.state.count++;
+    this.setState({ count: this.state.count + 1 });
+  };
+
+  render() {
     return (
       <div>
         {/* <img src={this.state.imageurl} alt="" /> */}
-        <span className={classes}>{this.formatCount()}</span>
-        <button className="btn btn-secondary btn-sm">Increment</button>
+        <span className={this.getBadgeClasses()}>{this.formatCount()}</span>
+        <button
+          onClick={this.handleIncrement}
+          className="btn btn-secondary btn-sm"
+        >
+          Increment
+        </button>
+        {/* {this.state.tags.length === 0 && "Please create a new tag!"} */}
+        {/* {this.renderTags()} */}
       </div>
     );
-  }
-
-  newMethod() {
-    let classes = "badge m-2 badge-";
-    classes += this.state.count === 0 ? "warning" : "primary";
-    return classes;
   }
 
   formatCount() {
     const { count } = this.state;
     return count === 0 ? "Zero" : count;
+  }
+
+  getBadgeClasses() {
+    let classes = "badge m-2 badge-";
+    classes += this.state.count === 0 ? "warning" : "primary";
+    return classes;
   }
 }
 
